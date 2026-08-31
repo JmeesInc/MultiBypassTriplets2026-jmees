@@ -1,0 +1,72 @@
+experiment:
+  name: swin_ensdistill_dense_f0
+  seed: 42
+data:
+  folds_csv: ${REPO}/folds/folds.csv
+  val_fold: 0
+  img: 224
+  clip_len: 16
+  clip_stride: 2
+  drop_empty: true
+  frame_offsets:
+  - -181
+  - -128
+  - -90
+  - -64
+  - -45
+  - -32
+  - -22
+  - -16
+  - -11
+  - -8
+  - -6
+  - -4
+  - -3
+  - -2
+  - -1
+  - 0
+  cache_dir: ${WORK}/frozen_cache_oof_dense
+aug:
+  hflip: 0.5
+  color: 0.4
+  temporal_jitter: 1
+  rrc:
+    p: 0.7
+    scale:
+    - 0.5
+    - 1.0
+  frame_cutout:
+    p: 0.5
+    max_drop: 3
+  dyna:
+    mag: 0.4
+    n_freq: 3
+model:
+  swin_init: ${WORK}/pretrain_swin3d_verbtool/swin_backbone_best.pth
+  pairwise_heads: true
+train:
+  epochs: 10
+  bs: 6
+  lr: 0.0002
+  backbone_lr_mult: 0.1
+  weight_decay: 0.05
+  warmup_ratio: 0.05
+  precision: fp16
+  workers: 12
+  loss_weights:
+    ivt: 1.6
+    i: 0.4
+    v: 0.4
+    t: 0.4
+    it: 0.8
+    iv: 0.8
+  pos_weight_cap: 20.0
+wandb:
+  enabled: false
+  project: multibypass-triplet
+  group: expaug_C
+distill:
+  teacher_soft: ${WORK}/teach/ensemble_soft_all.npz
+  weight: 0.5
+  beta: 1.0
+  warmup_ep: 2

@@ -1,0 +1,20 @@
+# Pretrain Swin3D-B on CholecT50 for VERB recognition (variant B: verb + tool(instrument) multi-task).
+experiment:
+  name: pretrain_swin3d_verbtool
+  seed: 42
+data:
+  img: 224
+  clip_len: 16
+  clip_stride: 2
+  frame_stride: 3        # subsample labeled frames (~33k clips from 100k) to cut compute
+model:
+  heads: [verb, instrument]
+train:
+  epochs: 6
+  bs: 6
+  lr: 2.0e-4
+  backbone_lr_mult: 0.3  # adapt Kinetics backbone toward surgical action (a bit stronger than fusion's 0.1)
+  weight_decay: 5.0e-2
+  warmup_ratio: 0.05
+  workers: 12
+  inst_weight: 1.0

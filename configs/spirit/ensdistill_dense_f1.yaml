@@ -1,0 +1,57 @@
+aug:
+  color: 0.3
+  dyna:
+    mag: 0.3
+    n_freq: 3
+  frame_cutout:
+    max_drop: 2
+    p: 0.5
+  hflip: 0.5
+  rrc:
+    p: 0.5
+    scale:
+    - 0.7
+    - 1.0
+  saturation: 0.2
+data:
+  clip_len: 8
+  drop_empty: true
+  folds_csv: ${REPO}/folds/folds.csv
+  val_fold: 1
+distill:
+  beta: 1.0
+  teacher_soft: ${WORK}/teach/ensemble_soft_all.npz
+  weight: 0.5
+experiment:
+  name: spirit_ensdistill_dense_f1
+  seed: 42
+model:
+  d: 128
+  dropout: 0.05
+  ds: 256
+  freeze_blocks: 16
+  grad_ckpt: false
+  nhead: 4
+  type: full
+train:
+  amp: bf16
+  backbone_lr: 2.0e-05
+  bs: 16
+  epochs: 10
+  framecutmix:
+    p: 0.5
+  grad_accum: 1
+  grad_clip: 1.2
+  loss_weights:
+    i: 0.4
+    it: 0.8
+    iv: 0.8
+    ivt: 1.6
+    t: 0.4
+    v: 0.4
+  lr: 0.0001
+  pos_weight_cap: 20.0
+  val_bs: 16
+  warmup_ratio: 0.05
+  weight_decay: 0.06
+  workers: 12

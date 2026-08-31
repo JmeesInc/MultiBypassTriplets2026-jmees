@@ -1,0 +1,13 @@
+# data and trained weights are never committed
+work/
+third_party/
+*.pth
+*.pt
+*.npz
+*.zip
+submit/checkpoints/
+submit/dinov3/
+submit/.torch/
+__pycache__/
+*.pyc
+.venv/

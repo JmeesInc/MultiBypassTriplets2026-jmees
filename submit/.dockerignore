@@ -1,0 +1,11 @@
+output*
+main_dbg.py
+main_prof.py
+**/__pycache__
+*.pyc
+# superseded split checkpoints (the training-code path loads the full f*.pth instead)
+checkpoints/spirit/shared_lower.pth
+checkpoints/spirit/upper_f0.pth
+checkpoints/spirit/upper_f1.pth
+checkpoints/spirit/upper_f2.pth
+checkpoints/spirit/upper_f3.pth

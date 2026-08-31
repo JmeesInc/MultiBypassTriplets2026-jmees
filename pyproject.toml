@@ -1,0 +1,51 @@
+[project]
+name = "multibypass-triplets-2026"
+version = "1.0.0"
+description = "Ensemble-distilled 8-model ensemble for MICCAI 2026 MultiBypassTriplets (4-fold CV 0.5181)"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = "==3.11.*"
+
+# Pinned to the versions the submitted container was built and validated with.
+# CUDA 11.8 is fixed by the challenge evaluation server.
+dependencies = [
+    "torch==2.6.0",
+    "torchvision==0.21.0",
+    "timm==1.0.27",
+    "transformers==4.56.2",
+    "numpy<2",
+    "opencv-python-headless",
+    "pillow",
+    "scikit-learn",
+    "scipy",
+    "safetensors",
+    "pyyaml",
+    "einops",
+    "tqdm",
+    # required by dinov3's hubconf, which imports its segmentation stack on load
+    "torchmetrics",
+    "ftfy",
+    "omegaconf",
+    "regex",
+    "termcolor",
+]
+
+[project.optional-dependencies]
+# only needed to re-train (logging / augmentation), not for inference
+train = [
+    "wandb",
+    "albumentations==2.0.8",
+    "matplotlib",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu118"
+url = "https://download.pytorch.org/whl/cu118"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu118" }
+torchvision = { index = "pytorch-cu118" }
+
+[tool.setuptools]
+packages = []

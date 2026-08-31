@@ -1,0 +1,20 @@
+# Pinned to the versions the submitted container was built and validated with.
+torch==2.6.0
+torchvision==0.21.0
+timm==1.0.27
+transformers==4.56.2
+numpy<2
+opencv-python-headless
+pillow
+scikit-learn
+scipy
+safetensors
+pyyaml
+einops
+tqdm
+# required by dinov3's hubconf (it imports the segmentation stack on load)
+torchmetrics
+ftfy
+omegaconf
+regex
+termcolor

@@ -1,0 +1,28 @@
+# Step 1: MB target (object) image-model — 15-class frame-level multi-label
+# Trained on MB frames; later FROZEN and its features fused into the Swin3D verb model.
+experiment:
+  name: target_convnext_b_v1
+  seed: 42
+
+data:
+  label_dir: ${MB_DATA}/label_files_challenge
+  video_dir: ${MB_DATA}/videos
+  folds_csv: ${REPO}/folds/folds.csv
+  val_fold: 0
+  img: 384
+  drop_empty: true          # skip frames with 0 annotations (annotation-gap frames)
+
+model:
+  backbone: convnext_base.fb_in22k_ft_in1k_384
+  num_classes: 15           # MB targets (incl null_target); spleen has 0 samples
+
+train:
+  epochs: 12
+  bs: 24
+  lr: 1.0e-4
+  backbone_lr_mult: 0.2
+  weight_decay: 5.0e-2
+  warmup_ratio: 0.05
+  precision: fp16
+  workers: 12
+  pos_weight_cap: 10.0
